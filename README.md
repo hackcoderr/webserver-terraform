@@ -54,7 +54,5 @@ _Terraform_
 _Github_
 ```
 1. Create the Github Repo which will be save our website code.
-links.
-[Visit website](https://github.com/hackcoderr/Mini-Project)
-
 ```
+[Visit WebCode](https://github.com/hackcoderr/Mini-Project)
