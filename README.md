@@ -2,7 +2,7 @@
 
 ## Amazon Web Service:
 ```
-Amazon Web Services, or AWS, is a cloud computing platform from Amazon that provides customers with a wide array of cloud services. Among the cloud options offered by Amazon AWS are Amazon Elastic Compute Cloud (Amazon EC2), Amazon Simple Storage Service (Amazon S3), Amazon Virtual Private Cloud (Amazon VPC), Amazon SimpleDB and Amazon WorkSpaces.
+Amazon Web Services, or AWS, is a cloud computing platform from Amazon that provides customers with a wide array of cloud\n services. Among the cloud options offered by Amazon AWS are Amazon Elastic Compute Cloud (Amazon EC2), Amazon Simple Storage Service (Amazon S3), Amazon Virtual Private Cloud (Amazon VPC), Amazon SimpleDB and Amazon WorkSpaces.
 
 Amazon first debuted its Amazon Web Services in 2006 as a way to enable the use of online services by client-side applications or other web sites via HTTP, REST or SOAP protocols. Amazon bills customers for Amazon AWS based on their usage of the various Amazon Web Services.
 
