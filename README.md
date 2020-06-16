@@ -15,3 +15,26 @@ Terraform is a tool for building, changing, and versioning infrastructure safely
 links.
 [Visit website](https://www.terraform.io/)
 
+---
+## Aim
+In this task I have integrated Terraform and AWS to create an infrastructure for launching an application on cloud using the EC2 service provided by AWS and using Terraform automated the whole process. The reason for doing so is that creating this infrastructure manually would be time consuming which is not an option in this agile world so using terraform we can automate the whole process and create the infrastructure for our application faster.
+
+>Problem Statement:
+```
+1. Create the key and security group which allow the port 80.
+
+2. Launch EC2 instance.
+
+3. In this EC2 instance use the key and security group which we have created in step 1.
+
+4. Launch one Volume (EBS) and mount that volume into /var/www/html
+
+5. Developer have uploaded the code into github repo also the repo has some images.
+
+6. Copy the github repo code into /var/www/html
+
+7. Create S3 bucket, and copy/deploy the images from github repo into the s3 bucket and change the permission to public readable.
+
+8 Create a Cloudfront using s3 bucket(which contains images) and use the Cloudfront URL to update in code in /var/www/html.
+```
+
