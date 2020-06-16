@@ -7,11 +7,11 @@ Amazon first debuted its Amazon Web Services in 2006 as a way to enable the use 
 
 In 2012, Amazon launched the AWS Marketplace to accommodate and grow the emerging ecosystem of AWS offerings from third-party providers that have built their own solutions on top of the Amazon Web Services platform. The AWS Marketplace is an online store for Amazon Web Services customers to find, compare and begin using AWS software and technical services.
 links
-[Visit website](https://aws.amazon.com/console/"AWS")
+[Visit website](https://aws.amazon.com/console/)
 
 ---
 ## Terraform
 Terraform is a tool for building, changing, and versioning infrastructure safely and efficiently. Terraform can manage existing and popular service providers as well as custom in-house solutions. Configuration files describe to Terraform the components needed to run a single application or your entire datacenter.
 links.
-[Visit website](https://www.terraform.io/"Terraform")
+[Visit website](https://www.terraform.io/)
 
