@@ -37,4 +37,24 @@ In this task I have integrated Terraform and AWS to create an infrastructure for
 
 8 Create a Cloudfront using s3 bucket(which contains images) and use the Cloudfront URL to update in code in /var/www/html.
 ```
+>Requirements
 
+_AWS_
+```
+1. Create an AWS account and after logging in create an IAM account.
+
+2. Download the AWS CLI tool and use AWS CLI for generating a profile which we would provide while running the Terraform code.
+```
+_Terraform_
+```
+1. Download terraform software and after downloading add terraform path in enviornment variables.
+
+2. Create a folder in which our terraform code will be saved and using terraform init command download the required plugins for the providers used.
+```
+_Github_
+```
+1. Create the Github Repo which will be save our website code.
+links.
+[Visit website](https://github.com/hackcoderr/Mini-Project)
+
+```
