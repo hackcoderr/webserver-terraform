@@ -56,3 +56,9 @@ _Github_
 1. Create the Github Repo which will be save our website code.
 ```
 [Visit WebCode](https://github.com/hackcoderr/Mini-Project)
+
+
+### FlowChart of Problem Statement
+ImagesImages
+![images](https://github.com/hackcoderr/Mini-Project/blob/master/images/portfolio/webserver123.jpg)
+![images]()
