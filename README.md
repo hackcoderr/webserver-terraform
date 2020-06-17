@@ -1,6 +1,7 @@
 ## Launching-Webserver-on-AWS-cloud-using-Terraform
 ---
-![image](https://img-a.udemycdn.com/course/750x422/2476280_486f.jpg)
+
+<img src="https://img-a.udemycdn.com/course/750x422/2476280_486f.jpg" width="1500" height="500" alt=""> 
 
 ---
 ## Amazon Web Service:
