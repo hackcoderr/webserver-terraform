@@ -1,8 +1,8 @@
 provider "aws" {
         profile = "task1"
         region= "ap-south-1"
-	access_key="your_access key"
-	secret_key="your_secret_key"
+	access_key="AKIAJLRH3UXU3H23ELQQ"
+	secret_key="UqAAQIxrY+MkA3PAFtMAVFEBg6ug9mRlK4Z0Pr1/"
 }
 
 
@@ -46,7 +46,7 @@ resource "aws_instance" "my_task1_os" {
   connection {
      type = "ssh"
      user = "ec2-user"
-     private_key = file("/home/sachinkumarkashyap/Downloads/HBCloud/Terraform/eks.pem")
+     private_key = file("/home/sachinkumarkashyap/Downloads/hmc/Terraform/eks.pem")
      host = aws_instance.my_task1_os.public_ip
 }
  provisioner "remote-exec" {
@@ -58,34 +58,34 @@ resource "aws_instance" "my_task1_os" {
   }
 
   tags = {
-    Name = "OS"
+    Name = "os1"
   }
 }
 output "az_id" {
-    value = aws_instance.myterraformos1.availability_zone
+    value = aws_instance.my_task1_os.availability_zone
 }
 output "publicip" {
-  value = aws_instance.myterraformos1.public_ip
+  value = aws_instance.my_task1_os.public_ip
 }
 
-resource "aws_ebs_volume" "volterraform" {
+resource "aws_ebs_volume" "task1_ebs" {
   availability_zone = "ap-south-1a"
   size              = 1
 
   tags = { 
-    Name = "volforterraform"
+    Name = "task1_ebs"
   }
 }
 resource "aws_volume_attachment" "attachvol" {
   device_name = "/dev/sdh"
-  volume_id   = "${aws_ebs_volume.volterraform.id}"
-  instance_id = "${aws_instance.myterraformos1.id}"
+  volume_id   = "${aws_ebs_volume.task1_ebs.id}"
+  instance_id = "${aws_instance.my_task1_os.id}"
   force_detach = true
 }
 
 resource "null_resource" "localsystem2"  {
 	provisioner "local-exec" {
-	    command = "echo  ${aws_instance.myterraformos1.public_ip} > publicip.txt"
+	    command = "echo  ${aws_instance.my_task1_os.public_ip} > publicip.txt"
   	}
 }
 
@@ -99,8 +99,8 @@ depends_on = [
   connection {
     type     = "ssh"
     user     = "ec2-user"
-    private_key = file("/home/sachinkumarkashyap/Downloads/HBCloud/Terraform/eks.pem")
-    host = aws_instance.myterraformos1.public_ip
+    private_key = file("/home/sachinkumarkashyap/Downloads/hmc/Terraform/eks.pem")
+    host = aws_instance.my_task1_os.public_ip
   }
 
 provisioner "remote-exec" {
@@ -108,7 +108,7 @@ provisioner "remote-exec" {
       "sudo mkfs.ext4  /dev/xvdh",
       "sudo mount  /dev/xvdh  /var/www/html",
       "sudo rm -rf /var/www/html/*",
-      "sudo git clone https://github.com/aaditya2801/terraformjob1.git /var/www/html/"
+      "sudo git clone https://github.com/hackcoderr/Mini-Project.git /var/www/html/"
     ]
   }
 }
@@ -123,20 +123,20 @@ depends_on = [
   ]
 
 	provisioner "local-exec" {
-	    command = "start chrome  ${aws_instance.myterraformos1.public_ip}"
+	    command = "start chrome  ${aws_instance.my_task1_os.public_ip}"
   	}
 }
-resource "aws_s3_bucket" "s3bucketjob1" {
-  bucket = "mynewbucketforjob1"
+resource "aws_s3_bucket" "task1_s3" {
+  bucket = "my_task1_s3"
   acl    = "private"
 
   tags = {
-    Name        = "My bucket"
+    Name        = "my_task1_s3"
     Environment = "Dev"
   }
 }
 resource "aws_s3_bucket_public_access_block" "publicaccess" {
-  bucket = "${aws_s3_bucket.s3bucketjob1.id}"
+  bucket = "${aws_s3_bucket.task1_s3.id}"
 
   block_public_acls   = true
   block_public_policy = true
@@ -145,7 +145,7 @@ locals {
 s3_origin_id = "myS3Origin"
 }
 resource "aws_cloudfront_origin_access_identity" "oai" {
-  comment = "oaiforjob1"
+  comment = "oai_for_task1"
 }
 data "aws_iam_policy_document" "oaipolicy" {
   statement {
@@ -155,17 +155,17 @@ data "aws_iam_policy_document" "oaipolicy" {
       type        = "AWS"
       identifiers = ["${aws_cloudfront_origin_access_identity.oai.iam_arn}"]
     }
-    resources = ["${aws_s3_bucket.s3bucketjob1.arn}"]
+    resources = ["${aws_s3_bucket.task1_s3.arn}"]
     }
   }
 
 resource "aws_s3_bucket_policy" "bucketpolicy" {
-  bucket = "${aws_s3_bucket.s3bucketjob1.id}"
+  bucket = "${aws_s3_bucket.task1_s3.id}"
   policy = "${data.aws_iam_policy_document.oaipolicy.json}"
 }
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = "${aws_s3_bucket.s3bucketjob1.bucket_regional_domain_name}"
+    domain_name = "${aws_s3_bucket.task1_s3.bucket_regional_domain_name}"
     origin_id   = "${local.s3_origin_id}"
 
     s3_origin_config {
@@ -268,7 +268,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 }
 resource "aws_ebs_snapshot" "snap1" {
-  volume_id = "${aws_ebs_volume.volterraform.id}"
+  volume_id = "${aws_ebs_volume.task1_ebs.id}"
 
   tags = {
     Name = "job1snap"
