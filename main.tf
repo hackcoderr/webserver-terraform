@@ -1,15 +1,15 @@
 provider "aws" {
         profile = "task1"
-        region  = "ap-south-1"
+        region= "ap-south-1"
+	access_key="your_access key"
+	secret_key="your_secret_key"
 }
-resource "aws_key_pair" "keypair" {
-  key_name   = "eks"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
-}
+
+
 resource "aws_security_group" "allow_http" {
   name        = "allow_http"
   description = "Allow http inbound traffic"
-  vpc_id      = "vpc-b4e8f5dc"
+  vpc_id      = "vpc-d2b985ba"
 
   ingress {
     description = "http from VPC"
@@ -37,7 +37,7 @@ resource "aws_security_group" "allow_http" {
     Name = "allow_http"
   }
 }
-resource "aws_instance" "myterraformos1" {
+resource "aws_instance" "my_task1_os" {
   ami = "ami-0447a12f28fddb066"
   instance_type = "t2.micro"
   key_name = "eks"
@@ -47,7 +47,7 @@ resource "aws_instance" "myterraformos1" {
      type = "ssh"
      user = "ec2-user"
      private_key = file("/home/sachinkumarkashyap/Downloads/HBCloud/Terraform/eks.pem")
-     host = aws_instance.myterraformos1.public_ip
+     host = aws_instance.my_task1_os.public_ip
 }
  provisioner "remote-exec" {
     inline = [
@@ -58,7 +58,7 @@ resource "aws_instance" "myterraformos1" {
   }
 
   tags = {
-    Name = "OSterraform"
+    Name = "OS"
   }
 }
 output "az_id" {
