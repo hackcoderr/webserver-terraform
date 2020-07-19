@@ -1,7 +1,5 @@
 provider "aws" {
   region = "ap-south-1"
-  access_key = "AKIAI6MIMVQZDTDRMCGA"
-  secret_key = "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"
   profile = "task"
 }
 
