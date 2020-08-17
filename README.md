@@ -68,15 +68,11 @@ _Github_
 
 
 ### Explaination of Code
->1. Create the key pair.
+>1. Create the provider.
 ```
 provider "aws" {
-        profile = "mickey"
-        region  = "ap-south-1"
-}
-resource "aws_key_pair" "keypair" {
-  key_name   = "Bot1"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD3F6tyPEFEzV0LX3X8BsXdMsQz1x2cEikKDEY0aIj41qgxMCP/iteneqXSIFZBp5vizPvaoIR3Um9xK7PGoW8giupGn+EPuxIA4cDM4vzOqOkiMPhz5XK0whEjkVzTo4+S0puvDZuwIsdiW9mxhJc7tgBNL0cYlWSYVkz4G/fslNfRPW5mYAM49f4fhtxPb5ok4Q2Lg9dPKVHO/Bgeu5woMc7RY0p1ej6D4CKFE6lymSDJpW0YHX/wqE9+cfEauh7xZcG0q9t2ta6F6fmX0agvpFyZo8aFbXeUBr7osSCJNgvavWbM/06niWrOvYX2xwWdhXmXSrbX8ZbabVohBK41 email@example.com"
+        profile = "task1"
+        region= "ap-south-1"
 }
 ```
 
@@ -85,7 +81,7 @@ resource "aws_key_pair" "keypair" {
 resource "aws_security_group" "allow_http" {
   name        = "allow_http"
   description = "Allow http inbound traffic"
-  vpc_id      = "vpc-b4e8f5dc"
+  vpc_id      = "vpc-b722c7dc"
 
   ingress {
     description = "http from VPC"
@@ -116,17 +112,17 @@ resource "aws_security_group" "allow_http" {
 ```
 > 3. Launch an EC2 instance using the pre-created Key-pair and Security Group. 
 ```
-resource "aws_instance" "myterraformos1" {
+resource "aws_instance" "my_task1_os" {
   ami = "ami-0447a12f28fddb066"
   instance_type = "t2.micro"
-  key_name = "keyname111"
+  key_name = "eks"
   security_groups = ["allow_http"]
 
   connection {
      type = "ssh"
      user = "ec2-user"
-     private_key = file("C:/Users/Sharma/Downloads/keyname111.pem")
-     host = aws_instance.myterraformos1.public_ip
+     private_key = file("/home/sachinkumarkashyap/Downloads/hmc/Terraform/eks.pem")
+     host = aws_instance.my_task1_os.public_ip
 }
  provisioner "remote-exec" {
     inline = [
@@ -137,40 +133,41 @@ resource "aws_instance" "myterraformos1" {
   }
 
   tags = {
-    Name = "OSterraform"
+    Name = "os1"
   }
 }
+output "az_id" {
+    value = aws_instance.my_task1_os.availability_zone
+}
+output "publicip" {
+  value = aws_instance.my_task1_os.public_ip
+}
+
 ```
 >4. Launch one Volume (EBS). Attach it to the instance. Next mount that volume into /var/www/html/
 
 >5. As soon as the developer updates something in the code in GitHub, clone this Github repo which has our website source code also has some static images(static content).Clone the GitHub repo to this location /var/www/html
 ```
 
-output "az_id" {
-    value = aws_instance.myterraformos1.availability_zone
-}
-output "publicip" {
-  value = aws_instance.myterraformos1.public_ip
-}
 
-resource "aws_ebs_volume" "volterraform" {
+resource "aws_ebs_volume" "task1_ebs" {
   availability_zone = "ap-south-1a"
   size              = 1
 
   tags = { 
-    Name = "volforterraform"
+    Name = "task1_ebs"
   }
 }
 resource "aws_volume_attachment" "attachvol" {
   device_name = "/dev/sdh"
-  volume_id   = "${aws_ebs_volume.volterraform.id}"
-  instance_id = "${aws_instance.myterraformos1.id}"
+  volume_id   = "${aws_ebs_volume.task1_ebs.id}"
+  instance_id = "${aws_instance.my_task1_os.id}"
   force_detach = true
 }
 
 resource "null_resource" "localsystem2"  {
 	provisioner "local-exec" {
-	    command = "echo  ${aws_instance.myterraformos1.public_ip} > publicip.txt"
+	    command = "echo  ${aws_instance.my_task1_os.public_ip} > publicip.txt"
   	}
 }
 
@@ -184,8 +181,8 @@ depends_on = [
   connection {
     type     = "ssh"
     user     = "ec2-user"
-    private_key = file("C:/Users/Sharma/Downloads/keyname111.pem")
-    host = aws_instance.myterraformos1.public_ip
+    private_key = file("/home/sachinkumarkashyap/Downloads/hmc/Terraform/eks.pem")
+    host = aws_instance.my_task1_os.public_ip
   }
 
 provisioner "remote-exec" {
@@ -193,11 +190,10 @@ provisioner "remote-exec" {
       "sudo mkfs.ext4  /dev/xvdh",
       "sudo mount  /dev/xvdh  /var/www/html",
       "sudo rm -rf /var/www/html/*",
-      "sudo git clone https://github.com/aaditya2801/terraformjob1.git /var/www/html/"
+      "sudo git clone https://github.com/hackcoderr/Mini-Project.git /var/www/html/"
     ]
   }
 }
-
 ```
 > 6. Create an S3 bucket. All the static content of our web server is stored over here. Copy images from your system to S3 and change the permission to public readable.
 ```
@@ -209,20 +205,20 @@ depends_on = [
   ]
 
 	provisioner "local-exec" {
-	    command = "start chrome  ${aws_instance.myterraformos1.public_ip}"
+	    command = "start chrome  ${aws_instance.my_task1_os.public_ip}"
   	}
 }
-resource "aws_s3_bucket" "s3bucketjob1" {
-  bucket = "mynewbucketforjob1"
+resource "aws_s3_bucket" "task1_s3" {
+  bucket = "my_task1_s3"
   acl    = "private"
 
   tags = {
-    Name        = "My bucket"
+    Name        = "my_task1_s3"
     Environment = "Dev"
   }
 }
 resource "aws_s3_bucket_public_access_block" "publicaccess" {
-  bucket = "${aws_s3_bucket.s3bucketjob1.id}"
+  bucket = "${aws_s3_bucket.task1_s3.id}"
 
   block_public_acls   = true
   block_public_policy = true
@@ -231,7 +227,7 @@ locals {
 s3_origin_id = "myS3Origin"
 }
 resource "aws_cloudfront_origin_access_identity" "oai" {
-  comment = "oaiforjob1"
+  comment = "oai_for_task1"
 }
 data "aws_iam_policy_document" "oaipolicy" {
   statement {
@@ -241,12 +237,12 @@ data "aws_iam_policy_document" "oaipolicy" {
       type        = "AWS"
       identifiers = ["${aws_cloudfront_origin_access_identity.oai.iam_arn}"]
     }
-    resources = ["${aws_s3_bucket.s3bucketjob1.arn}"]
+    resources = ["${aws_s3_bucket.task1_s3.arn}"]
     }
   }
 
 resource "aws_s3_bucket_policy" "bucketpolicy" {
-  bucket = "${aws_s3_bucket.s3bucketjob1.id}"
+  bucket = "${aws_s3_bucket.task1_s3.id}"
   policy = "${data.aws_iam_policy_document.oaipolicy.json}"
 }
 ```
@@ -254,7 +250,7 @@ resource "aws_s3_bucket_policy" "bucketpolicy" {
 ```
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = "${aws_s3_bucket.s3bucketjob1.bucket_regional_domain_name}"
+    domain_name = "${aws_s3_bucket.task1_s3.bucket_regional_domain_name}"
     origin_id   = "${local.s3_origin_id}"
 
     s3_origin_config {
@@ -357,7 +353,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 }
 resource "aws_ebs_snapshot" "snap1" {
-  volume_id = "${aws_ebs_volume.volterraform.id}"
+  volume_id = "${aws_ebs_volume.task1_ebs.id}"
 
   tags = {
     Name = "job1snap"
