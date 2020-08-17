@@ -1,15 +1,13 @@
 provider "aws" {
         profile = "task1"
         region= "ap-south-1"
-	access_key="AKIAJLRH3UXU3H23ELQQ"
-	secret_key="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"
 }
 
 
 resource "aws_security_group" "allow_http" {
   name        = "allow_http"
   description = "Allow http inbound traffic"
-  vpc_id      = "vpc-d2b985ba"
+  vpc_id      = "vpc-b722c7dc"
 
   ingress {
     description = "http from VPC"
