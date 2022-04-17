@@ -1,9 +1,5 @@
-## Launching-Webserver-on-AWS-cloud-using-Terraform
----
+# Launching Webserver on AWS cloud using Terraform
 
-<img src="https://img-a.udemycdn.com/course/750x422/2476280_486f.jpg" width="1500" height="500" alt=""> 
-
----
 ## Amazon Web Service:
 Amazon Web Services, or AWS, is a cloud computing platform from Amazon that provides customers with a wide array of cloud services. Among the cloud options offered by Amazon AWS are Amazon Elastic Compute Cloud (Amazon EC2), Amazon Simple Storage Service (Amazon S3), Amazon Virtual Private Cloud (Amazon VPC), Amazon SimpleDB and Amazon WorkSpaces.
 
